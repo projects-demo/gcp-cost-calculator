@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gcp-cost-calculator-v1
+spec:
+  selector:
+    matchLabels:
+      app: gcp-cost-calculator
+  template:
+    metadata:
+      labels:
+        app: gcp-cost-calculator
+    spec:
+      containers:
+      - name: gcp-cost-calculator
+        image: gcr.io/gebu-demo-projects/gcp-cost-calculator:latest
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: dbsecret1
+              key: username
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: dbsecret1
+              key: password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: dbsecret1
+              key: database
+        # [START cloud_sql_proxy_secret_host]
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: dbsecret
+              key: db_host

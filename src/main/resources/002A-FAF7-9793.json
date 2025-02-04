@@ -1,0 +1,45 @@
+{
+  "skus": [
+    {
+      "name": "services/002A-FAF7-9793/skus/8F23-5CCC-F9D5",
+      "skuId": "8F23-5CCC-F9D5",
+      "description": "Licensing Fee for Click to Deploy Single Node Filer",
+      "category": {
+        "serviceDisplayName": "Google Click to Deploy Puppet",
+        "resourceFamily": "License",
+        "resourceGroup": "GoogleClicktoDeploy",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 0
+                }
+              }
+            ]
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:13.887Z"
+        }
+      ],
+      "serviceProviderName": "Google"
+    }
+  ],
+  "nextPageToken": ""
+}

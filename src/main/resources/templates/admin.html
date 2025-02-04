@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Console</title>
+<script type="text/javascript"></script>
+
+<style>
+
+#menu {
+     font-family: tahoma;
+     margin-top: 10px;
+     margin-right: 10px;
+     position:absolute;
+     top:0;
+     right:0;
+ }
+
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed; /* or absolute */
+  top: 60%;
+  left: 40%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+</style>
+
+<script type="text/javascript">
+
+function setValue(source) {
+    //document.getElementById("helloid").style.display = ""; 
+    document.getElementById("loaderid").className  = "loader"; 
+}
+
+</script>
+</head>
+<body>
+<div id="menu">
+         <a href="/" >Home</a>
+</div>
+
+	<h1>Admin Configuration...</h1>
+Documentation -
+<br>
+<a href="https://cloud.google.com/billing/docs/reference/rest/v1/services.skus/list" target="_blank">https://cloud.google.com/billing/docs/reference/rest/v1/services.skus/list</a>
+<br><a href="https://cloud.google.com/billing/v1/how-tos/catalog-api" target="_blank">https://cloud.google.com/billing/v1/how-tos/catalog-api</a>
+
+	<table>
+		<tr>
+			<th>S.No.</th>
+			<th>Page</th>
+			<th>Link</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>GCP SKU Page</td>
+			<td><a href="https://cloud.google.com/skus/" target="_blank">https://cloud.google.com/skus/</a>
+			</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>GCP Calculator Page</td>
+			<td><a href="https://cloud.google.com/products/calculator"
+				target="_blank">https://cloud.google.com/products/calculator</a></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>GCP Marketplace Page</td>
+			<td><a href="https://console.cloud.google.com/marketplace/"
+				target="_blank">https://console.cloud.google.com/marketplace/</a></td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>GCP Pricing Page</td>
+			<td><a href="https://cloud.google.com/pricing/list"
+				target="_blank">https://cloud.google.com/pricing/list</a></td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>GCP REST API</td>
+			<td><a
+				href="https://cloudbilling.googleapis.com/v1/services?key=AIzaSyCqJoF6E3lX5a7uT2jH3pPvTEV-47w49ek"
+				target="_blank">https://cloudbilling.googleapis.com/v1/services?key=AIzaSyCqJoF6E3lX5a7uT2jH3pPvTEV-47w49ek</a>
+
+				<br> <a
+				href="https://cloudbilling.googleapis.com/v1/services/F17B-412E-CB64/skus?key=AIzaSyCqJoF6E3lX5a7uT2jH3pPvTEV-47w49ek"
+				target="_blank">https://cloudbilling.googleapis.com/v1/services/F17B-412E-CB64/skus?key=AIzaSyCqJoF6E3lX5a7uT2jH3pPvTEV-47w49ek</a>
+
+
+			</td>
+		</tr>
+		
+	</table>
+	<br> <br>
+	<form action="/addToCacheService" id="addToCacheService" method="POST">
+		<label for="addToCacheService" class="other"><b>Add to cache</b></label><br>
+		<input type="text" id="serviceId" size="50" name="serviceId" value="" placeholder="Enter serviceId">
+		<input type="submit" value="Submit    ">
+	</form>
+<br>
+	<form action="/removeFromCacheService" id="removeFromCacheService" method="POST">
+		<label for="removeFromCacheService" class="other"><b>Remove From cache</b></label><br>
+		<input type="text" id="serviceId" size="50" name="serviceId" value="" placeholder="Enter serviceId">
+		<input type="submit" value="Submit    ">
+	</form>
+
+<br>
+<div>	<a href="/listCachedServices"><b>List Cached Services</b></a></div>
+<div>	<a href="/runBatchJob" onClick="setValue(this)"><b>Run Batch Job</b></a></div>
+<div>	<a href="/deleteBatchJob" onClick="setValue(this)"><b>Delete All Cache</b></a></div>
+<br>	
+
+<form action="/admin" id="adminform" method="POST">
+  <label for="BASE_PATH_CLOUD" class="other"><b>BASE_PATH_CLOUD</b></label><br>
+  <input type="text" id="BASE_PATH_CLOUD" size="50" name="BASE_PATH_CLOUD" value="/home/saurabh_gupta/gcp-cost-calculator"><br><br>
+  <input type="submit" value="Submit    ">
+</form>
+	
+	<table id="listOfCachedServices">
+	    <tbody>
+		<tr th:if="${listOfCachedServices == null or listOfCachedServices.empty}">
+	            <td colspan="2"> </td>
+	        </tr>
+	        <tr th:each="cachedService : ${listOfCachedServices}">
+	            <td><span th:text="${cachedService.serviceId}"> serviceId </span></td>
+	            <td><span th:text="${cachedService.displayName}"> displayName </span></td>
+	        </tr>
+	    </tbody>
+	</table>
+
+	<table id="listOfAllServices">
+	    <thead>
+	        <tr>
+	        	<th> S. No.</th>
+	            <th> Service ID </th>
+	            <th> Service Name </th>
+	        </tr>
+	    </thead>
+	
+	    <tbody>
+		<tr th:if="${listOfAllServices == null or listOfAllServices.empty}">
+	            <td colspan="2"> </td>
+	        </tr>
+	        <tr th:each="service : ${listOfAllServices}">
+	        	<td><span th:text="${service.sNo}"> sNo </span></td>
+	            <td><span th:text="${service.serviceId}"> serviceId </span></td>
+	            <td><span th:text="${service.displayName}"> displayName </span></td>
+	        </tr>
+	    </tbody>
+	</table>
+	
+
+        <div class="col-md-2"></div>
+
+  
+
+	
+<div id="loaderid" >
+ 
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<script src="jquery.1.10.2.min.js"></script>
+<script src="jquery.autocomplete.min.js"></script>
+<script src="JavaScriptFile.js"></script>
+
+<link href="main.css" rel="stylesheet" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+th, td {
+	border: 1px solid black;
+}
+
+table {
+	border: 2px solid black;
+}
+
+.ui-autocomplete.ui-widget {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 5px;
+}
+
+.autocomplete-suggestions {
+	border: 1px solid #999;
+	background: #FFF;
+	overflow: auto;
+}
+
+.autocomplete-suggestion {
+	padding: 2px 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 15px;
+}
+
+.autocomplete-selected {
+	background: #F0F0F0;
+}
+
+.autocomplete-suggestions strong {
+	font-weight: normal;
+	color: #3399FF;
+}
+
+.autocomplete-group {
+	padding: 2px 5px;
+}
+
+.autocomplete-group strong {
+	display: block;
+	border-bottom: 1px solid #000;
+}
+
+.loader {
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid #3498db;
+	width: 70px;
+	height: 70px;
+	-webkit-animation: spin 2s linear infinite; /* Safari */
+	animation: spin 2s linear infinite;
+	position: fixed; /* or absolute */
+	top: 50%;
+	left: 40%;
+}
+
+/* Safari */
+@
+-webkit-keyframes spin { 0% {
+	-webkit-transform: rotate(0deg);
+}
+
+100%
+{
+-webkit-transform
+:
+ 
+rotate
+(360deg);
+ 
+}
+}
+@
+keyframes spin { 0% {
+	transform: rotate(0deg);
+}
+
+100%
+{
+transform
+:
+ 
+rotate
+(360deg);
+ 
+}
+}
+.label {
+	color: white;
+	padding: 8px;
+	font-family: Arial;
+}
+
+.success {
+	background-color: #4CAF50;
+} /* Green */
+.info {
+	background-color: #2196F3;
+} /* Blue */
+.warning {
+	background-color: #ff9800;
+} /* Orange */
+.danger {
+	background-color: #f44336;
+} /* Red */
+.other {
+	background-color: #e7e7e7;
+	color: black;
+} /* Gray */
+#col-1 {
+	position: relative;
+	width: 50%;
+	float: left;
+	height: 100%;
+}
+
+#col-2 {
+	position: relative;
+	width: 50%;
+	float: right;
+	height: 100%;
+}
+
+#menu {
+	font-family: tahoma;
+	margin-top: 10px;
+	margin-right: 10px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#loading {
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid #3498db;
+	width: 70px;
+	height: 70px;
+	top: 50%;
+	left: 40%;
+	position: fixed;
+	background: #fff url('googlecloud.gif') no-repeat center center;
+	z-index: 9999;
+}
+
+#loading1 {
+	width: 70px;
+	height: 70px;
+	top: 50%;
+	left: 40%;
+	position: fixed;
+	background: #fff url('googlecloud.gif') no-repeat center center;
+	z-index: 9999;
+}
+</style>
+
+</head>
+
+<body>
+	<div id="menu">
+		<a href="/demo">Demo</a> 
+		<a href="/locale">Locale</a> 
+		<a href="/compare">Compare</a> 
+		<a href="/enableAudio">Enable Audio</a> 
+		<a href="/estimate">Estimate</a>
+		<a href="/admin">Admin</a>
+	</div>
+
+	<h2>
+		<img src="GCLcalclogo.png" alt="Spring2Boot">
+	</h2>
+	<div>
+		<a href="/get-services#listOfAllServices" target="_blank"><b>List of all GCP Services</b></a>
+	</div>
+
+
+	<!-- <h2>GCP Calculator</h2> -->
+
+	<div id="col-1">
+		<form action="/search-service" id="usrform" method="POST">
+			<input type="text" id="w-input-search" value="" size="65"
+				name="displayName" placeholder="Search a service"> <input
+				type="hidden" id="sNo" name="sNo" value=""> <input
+				type="hidden" id="serviceId" name="serviceId" value=""> <input
+				type="submit" value="Get Options">
+		</form>
+		
+     
+      
+	</div>
+
+	<div id="col-2">
+
+		<tr th:if="${currentServiceName != null}">
+			<b> Service </b> <br>
+			<td th:text="${currentServiceName}"></td><br><br>
+		</tr>
+
+		<form action="/filter-service" id="filterService" method="POST">
+			<table>
+				<tr th:if="${filterRegionMap != null}">
+					<td colspan="2"><b>Region</b> <select id="regionDD" name="regionDD" style="width: 400px">
+							<option th:each="region: ${filterRegionMap.entrySet()}" 
+							th:value="${region.getKey()}" 
+							th:text="${region.getKey()}"
+							th:selected="${region.getValue()}" />
+					</select></td>
+				</tr>
+
+				<tr th:if="${listOfFamilyModels != null}">
+					<td colspan="2"><b>Family</b> 
+					<th:block th:each="familyModel: ${listOfFamilyModels}" th:onload="'setResourcesForFamilyDD();'">
+							<input type="checkbox" name="filtersMap"
+								th:value="${familyModel.getFamilyName()} + ':' +${familyModel.getResources()}"
+								th:checked="${familyModel.isSelected()}"
+								onclick="setResourcesForFamilyDD(this)" />
+							<label th:text="${familyModel.getFamilyName()}"></label>
+						</th:block></td>
+				</tr>
+
+				<tr th:if="${listOfFamilyModels != null}">
+					<td><span id="resourcesForFamily"></span></td>
+				</tr>
+
+				<tr
+					th:if="${filterResourceFamilyMap != null or filterRegionMap != null}">
+					<td><input type="submit" value="Apply filters"></td>
+				</tr>
+				
+			</table>
+
+			<input type="hidden" id="regionId" name="regionId" value="">
+		</form>
+
+		<tr
+			th:if="${filterResourceFamilyMap != null or filterRegionMap != null}">
+			<br>
+		</tr>
+
+		<tr th:if="${skuList != null and !skuList.empty}">
+
+			<td colspan="2"><b>Pricing Options</b></td>
+			<td><br> <select id="skuDD" name="skuDD" onChange="printPricingCurrentSku('skuDD')" style="width: 465px">
+					<option value="" selected="selected">----------------------------------------Select-----------------------------------------</option>
+					<option th:each="sku: ${skuList}" th:value="${sku}" th:text="${sku.description}" />
+			</select></td>
+
+			<td>
+				<form action="/search-service1" id="usrform1" method="POST">
+					<input type="text" id="w-input-search1" value="" size="73" name="displayName1" placeholder="Search a service"> 
+					<input type="hidden" id="serviceName" name="serviceName" value="">
+					<input type="hidden" id="serviceId1" name="serviceId1" value="">
+				</form>
+			</td>
+		</tr>
+
+		<span id="pricingInfoId"></span> <span class="display: none" id="result"> </span>
+
+		<div id="loadingDiv" style="">
+			<img id="loading1" src="googlecloud.gif" alt="" width="200" height="200">
+		</div>
+
+</body>
+</html>

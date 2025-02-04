@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Estimate</title>
+<script type="text/javascript">
+
+function goBack() {
+  window.history.back();
+}
+</script>
+
+<style type="text/css">
+
+#menu {
+     font-family: tahoma;
+     margin-top: 10px;
+     margin-right: 10px;
+     position:absolute;
+     top:0;
+     right:0;
+ }
+
+#menu1 {
+     font-family: tahoma;
+     margin-top: 20px;
+     margin-right: 10px;
+     position:absolute;
+     top:10;
+     right:0;
+     font-size: 10px;
+ }
+ 
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="menu">
+         <a href="/" >Home</a>
+         <a href="/clear-estimate">Clear Estimate</a>
+         <a href="/convert-currency" >Convert Currency</a>
+</div>
+
+<div id="menu1">
+         SessionID : <span style="color:red" th:text="${sessionId}"> </span><br>
+         CreationTime : <span style="color:red" th:text="${creationTime}">  </span><br>
+         LastAccessedTime : <span style="color:red" th:text="${lastAccessedTime}">  </span>
+</div>
+
+	<h1>Estimate...</h1>
+	
+		<table id="listOfAllServices">
+	    <thead>
+	        <tr>
+	        	<th> Product Name </th>
+	            <th> Sub Product Name </th>
+	            <th> Requested Units </th>
+	            <th> Cost </th>
+
+	        </tr>
+	    </thead>
+	
+	    <tbody>
+	    <tr th:if="${estimateModelList != null}">
+	        <div><b>Total Cost  = </b> <span th:text="${estimateModelList.get(0).pricing.currencyCode}"> </span> <span th:text="${estimateCost}"> </span></div>
+	        <br> 
+	    <b>Break Up</b>
+		 </tr>
+	        <tr th:each="estimateModel : ${estimateModelList}">
+	        	<td><span th:text="${estimateModel.serviceName}"> </span></td>
+	        	<td><span th:text="${estimateModel.skuName}">  </span></td>
+	        	<td><span th:text="${estimateModel.unitsRequested}">  </span>
+	        	<span th:text="${estimateModel.pricing.usageUnit}">  </span></td>
+	        	<td><span th:text="${estimateModel.pricing.currencyCode}">  </span>
+	        	<span th:text="${estimateModel.totalCost}">  </span></td>
+	        </tr>
+	        
+	    </tbody>
+	</table>
+	<br> <br>
+	     <input type="button" value= "Download">
+	     <input type="button" value= "Email">
+ 			<button onclick="goBack()">Go Back</button>
+</body>
+</html>

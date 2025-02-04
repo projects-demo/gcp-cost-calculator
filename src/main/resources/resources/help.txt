@@ -1,0 +1,118 @@
+==========docker & kubernetes deployment==========
+gcloud config set project gebu-demo-projects
+rm -r gcp-cost-calculator 
+gsutil cp -r gs://demo-projects2/gcp-cost-calculator/ .
+mvn clean install
+docker build -t  saurabh2204/gcp-cost-calculator .
+docker run -p 8081:8080 -t saurabh2204/gcp-cost-calculator  --name gcp-cost-calculator
+@@@@@@web preview on 8081 port in cloud console@@@@@@@@@
+
+docker push saurabh2204/gcp-cost-calculator
+docker tag saurabh2204/gcp-cost-calculator gcr.io/gebu-demo-projects/gcp-cost-calculator:latest
+docker push gcr.io/gebu-demo-projects/gcp-cost-calculator:latest
+kubectl apply -f no_proxy_private_ip.yaml 
+OR
+kubectl create deployment gcp-cost-calculator --image=gcr.io/gebu-demo-projects/gcp-cost-calculator:latest
+kubectl create deployment gcp-cost-calculator --image=saurabh2204/gcp-cost-calculator:latest
+
+kubectl expose deployment gcp-cost-calculator --type=LoadBalancer --port=8080 --load-balancer-ip=35.193.155.62
+
+kubectl create secret generic dbsecret --from-literal=db_host=10.50.160.3
+kubectl create secret generic dbsecret1 \
+  --from-literal=username=root \
+  --from-literal=password=root \
+  --from-literal=database=gebu-demo-projects:us-central1:gcpcalculator
+
+gcloud sql instances describe gcpcalculator
+jdbc:mysql://10.50.160.3:3306/gcpcalculator  
+public IP=34.70.241.89 
+private IP=10.50.160.3  
+INSTANCE_CONNECTION_NAME=gebu-demo-projects:us-central1:gcpcalculator 
+  
+==========docker & kubernetes deployment==========
+
+-----Cloud run deployment -----------------
+
+gcloud run deploy --image gcr.io/gebu-demo-projects/gcp-cost-calculator:latest --platform managed
+setting from console->
+1:CONTAINER->Service account (Compute Engine default service account)
+2:VARIABLES->DB_HOST (10.50.160.3)
+3:Cloud SQL connections->(gebu-demo-projects:us-central1:gcpcalculator)
+4:VPC Connector->(Connector1) 
+
+OR script->
+gcloud run services update gcp-cost-calculator \
+    --add-cloudsql-instances gebu-demo-projects:us-central1:gcpcalculator \
+    --set-env-vars CLOUD_SQL_CONNECTION_NAME=gebu-demo-projects:us-central1:gcpcalculator, DB_USER=root, DB_PASS=root, DB_NAME=34.70.241.89:3306/gcpcalculator	  
+
+-----CLoud run deployment -----------------
+
+cloudsql.instances.connect
+cloudsql.instances.get
+
+mvn package appengine:deploy
+gcloud app deploy
+gebu-demo-projects@appspot.gserviceaccount.com
+=============================
+https://dzone.com/articles/deploy-spring-boot-app-to-gcp-app-engine
+
+git clone https://github.com/raovinay/springboot-gcp-hello.git
+
+gcloud app deploy ~/gcp-cost-calculator/src/main/appengine/app.yaml
+gcloud app deploy ~/gcp-cost-calculator/target/gcp-cost-calculator-0.0.1-SNAPSHOT.jar
+
+gcloud app deploy C:\Users\saurabh.gupta\Desktop\Projects\gcp-cost-calculator\src\main\appengine\app.yaml
+C:\Users\saurabh.gupta\Desktop\Projects\gcp-cost-calculator\target\gcp-cost-calculator-0.0.1-SNAPSHOT.war
+
+https://dzone.com/articles/deploy-spring-boot-app-to-gcp-app-engine
+https://cloud.google.com/appengine/docs/flexible/java/quickstart
+https://github.com/GoogleCloudPlatform/java-docs-samples/tree/master/cloud-sql/mysql/servlet
+https://github.com/GoogleCloudPlatform/java-docs-samples/blob/master/cloud-sql/mysql/servlet/src/main/java/com/example/cloudsql/ConnectionPoolContextListener.java
+
+driverManagerDataSource.setUrl("jdbc:mysql://gebu-demo-projects:us-central1:gcpcalculator");
+		
+docker run -p 8080:8080 -t saurabh2204/gcpcostcalc  --name gcpcostcalc
+
+===============App Engine ===============
+gcloud app deploy pom.xml\
+
+gcloud sql instances describe  gcpcalculator
+./cloud_sql_proxy -instances=gcpcalculator-m=tcp:3306
+create table Service (serviceId varchar(255) not null, businessEntityName varchar(255), displayName varchar(255), name varchar(255), primary key (serviceId))
+
+gcloud sql connect gcpcalculator --user=root --quiet
+
+=================DB Query=======================
+create table RegionLocationMappings(
+   regionID VARCHAR(100) NOT NULL,
+   locationName VARCHAR(100) NOT NULL
+);
+
+INSERT INTO RegionLocationMappings
+VALUES 
+('us-west1', 'OREGON'),
+('us-west2', 'LOS ANGELES'),
+('us-west3', 'SALT LAKE CITY'),
+('us-west4', 'LAS VEGAS'),
+('us-central1', 'IOWA'),
+('us-east1', 'SOUTH CAROLINA'),
+('us-east4', 'N. VIRGINIA'),
+('northamerica-northeast1', 'MONTRÉAL'),
+('southamerica-east1', 'SÃO PAULO'),
+('europe-west2', 'LONDON'),
+('europe-west1', 'BELGIUM'),
+('europe-west4', 'NETHERLANDS'),
+('europe-west6', 'ZURICH'),
+('europe-west3', 'FRANKFURT'),
+('europe-north1', 'FINLAND'),
+('asia-south1', 'MUMBAI'),
+('asia-southeast1', 'SINGAPORE'),
+('asia-southeast2', 'JAKARTA'),
+('asia-east2', 'HONG KONG'),
+('asia-east1', 'TAIWAN'),
+('asia-northeast1', 'TOKYO'),
+('asia-northeast2', 'OSAKA'),
+('australia-southeast1', 'SYDNEY'),
+('asia-northeast3', 'SEOUL'); 
+
+=================DB Query=======================

@@ -1,0 +1,407 @@
+{
+  "skus": [
+    {
+      "name": "services/0069-3716-5463/skus/00C0-AE90-D5AE",
+      "skuId": "00C0-AE90-D5AE",
+      "description": "Custom Commit Plan QUser",
+      "category": {
+        "serviceDisplayName": "Qubole Data Service",
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Qubole",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "mo",
+            "usageUnitDescription": "month",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 2678400,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 0
+                }
+              },
+              {
+                "startUsageAmount": 10,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "108",
+                  "nanos": 0
+                }
+              }
+            ]
+          },
+          "aggregationInfo": {
+            "aggregationLevel": "ACCOUNT",
+            "aggregationInterval": "MONTHLY",
+            "aggregationCount": 1
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:15.477Z"
+        }
+      ],
+      "serviceProviderName": "Qubole",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/0069-3716-5463/skus/1992-9BAC-A2C0",
+      "skuId": "1992-9BAC-A2C0",
+      "description": "Custom Commit Plan QCU",
+      "category": {
+        "serviceDisplayName": "Qubole Data Service",
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Qubole",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 168000000
+                }
+              }
+            ]
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:15.477Z"
+        }
+      ],
+      "serviceProviderName": "Qubole",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/0069-3716-5463/skus/430A-4B21-3852",
+      "skuId": "430A-4B21-3852",
+      "description": "Essential Plan QCU",
+      "category": {
+        "serviceDisplayName": "Qubole Data Service",
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Qubole",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "h",
+            "usageUnitDescription": "hour",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 3600,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 168000000
+                }
+              },
+              {
+                "startUsageAmount": 10000,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 162000000
+                }
+              },
+              {
+                "startUsageAmount": 30000,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 156000000
+                }
+              },
+              {
+                "startUsageAmount": 50000,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 150000000
+                }
+              }
+            ]
+          },
+          "aggregationInfo": {
+            "aggregationLevel": "ACCOUNT",
+            "aggregationInterval": "MONTHLY",
+            "aggregationCount": 1
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:15.477Z"
+        }
+      ],
+      "serviceProviderName": "Qubole",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/0069-3716-5463/skus/71ED-0CFF-B099",
+      "skuId": "71ED-0CFF-B099",
+      "description": "Custom Commit Plan QUser - Tiered Option 3",
+      "category": {
+        "serviceDisplayName": "Qubole Data Service",
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Qubole",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "mo",
+            "usageUnitDescription": "month",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 2678400,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 0
+                }
+              },
+              {
+                "startUsageAmount": 100,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "108",
+                  "nanos": 0
+                }
+              }
+            ]
+          },
+          "aggregationInfo": {
+            "aggregationLevel": "ACCOUNT",
+            "aggregationInterval": "MONTHLY",
+            "aggregationCount": 1
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:15.477Z"
+        }
+      ],
+      "serviceProviderName": "Qubole",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/0069-3716-5463/skus/8127-822E-C8F6",
+      "skuId": "8127-822E-C8F6",
+      "description": "Essential Plan QUser",
+      "category": {
+        "serviceDisplayName": "Qubole Data Service",
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Qubole",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "mo",
+            "usageUnitDescription": "month",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 2678400,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 0
+                }
+              },
+              {
+                "startUsageAmount": 50,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "108",
+                  "nanos": 0
+                }
+              }
+            ]
+          },
+          "aggregationInfo": {
+            "aggregationLevel": "ACCOUNT",
+            "aggregationInterval": "MONTHLY",
+            "aggregationCount": 1
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:15.477Z"
+        }
+      ],
+      "serviceProviderName": "Qubole",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/0069-3716-5463/skus/C41F-D592-7A2A",
+      "skuId": "C41F-D592-7A2A",
+      "description": "Custom Commit Plan QUser - Tiered Option 1",
+      "category": {
+        "serviceDisplayName": "Qubole Data Service",
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Qubole",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "mo",
+            "usageUnitDescription": "month",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 2678400,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 0
+                }
+              },
+              {
+                "startUsageAmount": 25,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "108",
+                  "nanos": 0
+                }
+              }
+            ]
+          },
+          "aggregationInfo": {
+            "aggregationLevel": "ACCOUNT",
+            "aggregationInterval": "MONTHLY",
+            "aggregationCount": 1
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:15.477Z"
+        }
+      ],
+      "serviceProviderName": "Qubole",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    },
+    {
+      "name": "services/0069-3716-5463/skus/EC90-9230-B2C6",
+      "skuId": "EC90-9230-B2C6",
+      "description": "Custom Commit Plan QUser - Tiered Option 2",
+      "category": {
+        "serviceDisplayName": "Qubole Data Service",
+        "resourceFamily": "ApplicationServices",
+        "resourceGroup": "Qubole",
+        "usageType": "OnDemand"
+      },
+      "serviceRegions": [
+        "global"
+      ],
+      "pricingInfo": [
+        {
+          "summary": "",
+          "pricingExpression": {
+            "usageUnit": "mo",
+            "usageUnitDescription": "month",
+            "baseUnit": "s",
+            "baseUnitDescription": "second",
+            "baseUnitConversionFactor": 2678400,
+            "displayQuantity": 1,
+            "tieredRates": [
+              {
+                "startUsageAmount": 0,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "0",
+                  "nanos": 0
+                }
+              },
+              {
+                "startUsageAmount": 50,
+                "unitPrice": {
+                  "currencyCode": "USD",
+                  "units": "108",
+                  "nanos": 0
+                }
+              }
+            ]
+          },
+          "aggregationInfo": {
+            "aggregationLevel": "ACCOUNT",
+            "aggregationInterval": "MONTHLY",
+            "aggregationCount": 1
+          },
+          "currencyConversionRate": 1,
+          "effectiveTime": "2020-08-01T16:01:15.477Z"
+        }
+      ],
+      "serviceProviderName": "Qubole",
+      "geoTaxonomy": {
+        "type": "GLOBAL",
+        "regions": []
+      }
+    }
+  ],
+  "nextPageToken": ""
+}

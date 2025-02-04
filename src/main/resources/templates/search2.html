@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<script src="jquery.1.10.2.min.js"></script>
+<script src="jquery.autocomplete.min.js"></script>
+<link href="main.css" rel="stylesheet" type="text/css" />
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+th, td {
+  border: 1px solid black;
+}
+
+table {
+  border: 2px solid black;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 40%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.label {
+	color: white;
+	padding: 8px;
+	font-family: Arial;
+}
+
+.success {
+	background-color: #4CAF50;
+} /* Green */
+.info {
+	background-color: #2196F3;
+} /* Blue */
+.warning {
+	background-color: #ff9800;
+} /* Orange */
+.danger {
+	background-color: #f44336;
+} /* Red */
+.other {
+	background-color: #e7e7e7;
+	color: black;
+} /* Gray */
+#col-1 {
+	position: relative;
+	width: 50%;
+	float: left;
+	height: 100%;
+}
+
+#col-2 {
+	position: relative;
+	width: 50%;
+	float: right;
+	height: 100%;
+}
+#menu {
+     font-family: tahoma;
+     margin-top: 10px;
+     margin-right: 10px;
+     position:absolute;
+     top:0;
+     right:0;
+ }
+</style>
+<script>
+
+//https://www.technicalkeeda.com/spring-tutorials/spring-framework-jquery-ajax-request-and-json-response-example
+//        data:'firstName=' + $("#firstName").val() + "&lastName;=" + $("#lastName").val() + "&email;=" + $("#email").val(),
+function madeAjaxCall(){
+    $.ajax({
+     type: "post",
+     url: "/add-estimate",
+     cache: false,    
+     
+     data:'units=' + $("#units").val() + "&sku=" + $("#sku").val(),
+     success: function(response){
+    		document.getElementById("result").innerHTML = "Added successfully to estimate!!";
+    	    document.getElementById("result").className  = ""; 
+    	    document.getElementById("result").style.color = "red";
+     },
+     error: function(){      
+      alert('Error while request..');
+     }
+    });
+   }
+
+
+function madeAjaxCall1(){
+	//var e = document.getElementById("regionDD");
+	//var value1 = e.options[e.selectedIndex].value;
+	//var text = e.options[e.selectedIndex].text;
+
+		var filterNames = [];
+		var inputs = document.getElementsByName('filters');
+		for (var i = 0; i < inputs.length; i++) {
+			if (inputs[i].checked) {
+				var val = inputs[i].value;
+				filterNames.push(val);
+				//alert(val);
+			}
+		}
+
+		$.ajax({
+			type : "post",
+			url : "/filter-service",
+			cache : false,
+			data : 'filters=' + filterNames + "&regionId="+ $("#regionId").val(),
+			success : function(response) {
+				//$('#skuDD').load('/sku-list');
+				document.getElementById('skuDD').contentWindow.location.reload(true);
+				//document.getElementById("result").innerHTML = "Added successfully to estimate!!";
+				//document.getElementById("result").className  = ""; 
+				//document.getElementById("result").style.color = "red";
+			},
+			error : function() {
+				alert('Error while request..');
+			}
+		});
+	}
+
+function setValue55(source) {
+	if(!localStorage.getItem('initData')){
+	    $window.localStorage.setItem('initData', JSON.stringify($scope.initData));
+	}
+
+}
+	function setValue3(source) {
+		//alert("-->"+source)
+		var e = document.getElementById("regionDD");
+		var value1 = e.options[e.selectedIndex].value;
+		var text = e.options[e.selectedIndex].text;
+		document.getElementById("regionId").value = text;
+
+	}
+
+	function printPricingCurrentSku(source) {
+		//	document.getElementById("sku").value = source;
+		document.getElementById("result").innerHTML = "";
+
+		//	alert("1-->"+source)
+		var e = document.getElementById("skuDD");
+		var sku = e.options[e.selectedIndex].value;
+		var skuName = e.options[e.selectedIndex].text;
+		//alert("2-->"+sku)
+
+		//	alert("3-->"+text)
+
+		var finalResponse = "";
+		var finalResponseJava = "";
+		var output = [];
+		var outputArrJava = [];
+
+		//alert("-->"+sku)
+		var firstIndex = sku.indexOf("[startUsageAmount");
+		var lastIndex = sku.indexOf("],aggregationInfo");
+		var startUsageAmountToken = sku.substring(firstIndex, lastIndex);
+		var input = startUsageAmountToken
+				.split(",additionalProperties={}],additionalProperties={}");
+		var tokenVal, tokenVal1;
+
+		var firstIndex1 = sku.indexOf("serviceDisplayName");
+		var lastIndex1 = sku.indexOf(",resourceFamily");
+		var serviceName = sku.substring(firstIndex1, lastIndex1);
+		firstIndex1 = serviceName.indexOf("=") + 1;
+		lastIndex1 = serviceName.length;
+		serviceName = serviceName.substring(firstIndex1, lastIndex1);
+
+		firstIndex1 = sku.indexOf("usageUnitDescription=");
+		lastIndex1 = sku.indexOf(",baseUnit=");
+		var usageUnit = sku.substring(firstIndex1, lastIndex1);
+		firstIndex1 = usageUnit.indexOf("=") + 1;
+		lastIndex1 = usageUnit.length;
+		usageUnit = usageUnit.substring(firstIndex1, lastIndex1);
+
+		//baseUnitConversionFactor 
+		//nanoDivisorFactor = 1000000000
+
+		//unitPrice = nanos / (baseUnitConversionFactor * nanoDivisorFactor)
+
+		firstIndex1 = sku.indexOf("baseUnitConversionFactor=");
+		lastIndex1 = sku.indexOf(",displayQuantity");
+		var baseUnitConversionFactor = sku.substring(firstIndex1, lastIndex1);
+		firstIndex1 = baseUnitConversionFactor.indexOf("=") + 1;
+		lastIndex1 = baseUnitConversionFactor.length;
+		baseUnitConversionFactor = baseUnitConversionFactor.substring(
+				firstIndex1, lastIndex1);
+
+		var nanoDivisorFactor = 1000000000;
+
+		firstIndex1 = sku.indexOf("displayQuantity=");
+		lastIndex1 = sku.indexOf(",tieredRates");
+		var displayQuantity = sku.substring(firstIndex1, lastIndex1);
+		firstIndex1 = displayQuantity.indexOf("=") + 1;
+		lastIndex1 = displayQuantity.length;
+		displayQuantity = displayQuantity.substring(firstIndex1, lastIndex1);
+
+		var priceTokens;
+		var unitPrice;
+		var nanos;
+		var currencyCode;
+		var startUsageAmount;
+		var finalPrice;
+		var currentToken;
+		var outputStr = "";
+		var outputStrJava = "";
+
+		for (var i = 0; i < input.length; i++) {
+			//alert(input[i]);
+			if (input[i].includes('startUsageAmount')) {
+				//alert('0->'+input[i]);
+				firstIndex = input[i].indexOf("startUsageAmount");
+				lastIndex = input[i].length;
+				tokenVal = input[i].substring(firstIndex, lastIndex);
+				//alert('1->'+tokenVal);
+				firstIndex = tokenVal.indexOf("unitPrice");
+				lastIndex = tokenVal.indexOf("currencyCode");
+				tokenVal1 = tokenVal.substring(firstIndex, lastIndex);
+				tokenVal = tokenVal.replace(tokenVal1, "");
+				priceTokens = tokenVal.split(",");
+				for (var j = 0; j < priceTokens.length; j++) {
+					firstIndex1 = priceTokens[j].indexOf("=") + 1;
+					lastIndex1 = priceTokens[j].length;
+					if (priceTokens[j].includes('nanos')) {
+						nanos = priceTokens[j].substring(firstIndex1,
+								lastIndex1);
+					}
+					if (priceTokens[j].includes('currencyCode')) {
+						currencyCode = priceTokens[j].substring(firstIndex1,
+								lastIndex1);
+						if ("USD" === currencyCode.trim()) {
+							currencyCode = "$";
+						}
+					}
+					if (priceTokens[j].includes('startUsageAmount')) {
+						startUsageAmount = priceTokens[j].substring(
+								firstIndex1, lastIndex1);
+					}
+				}
+
+				unitPrice = nanos / nanoDivisorFactor;
+				finalPrice = unitPrice * displayQuantity;
+				finalPrice = finalPrice.toFixed(4);
+				outputStrJava = "~startUsageAmount:" + startUsageAmount
+						+ "~currencyCode:" + currencyCode + "~finalPrice:"
+						+ finalPrice + "~displayQuantity:" + displayQuantity
+						+ "~usageUnit:" + usageUnit + "</br>";
+				//outputStr = ""+ "startUsageAmount: "+ startUsageAmount + " "  +currencyCode + "" + finalPrice + " per"+ " "+ displayQuantity + " " + usageUnit +"<br>";
+				outputStr = "" + startUsageAmount + "~" + currencyCode + ""
+						+ finalPrice + " per" + " " + displayQuantity + " "
+						+ usageUnit + "<br>";
+
+				//alert('outputStr->'+outputStr);
+				output.push(outputStr);
+				outputArrJava.push(outputStrJava);
+			}
+		}
+
+		//finalResponse += "<br><br> <b> Service </b> <br>" + serviceName + "<br><br>";
+		finalResponse += "<br><br>" + "<b> Rate Card </b> <br>";
+		finalResponseJava += "~skuName:" + skuName + "</br>";
+		finalResponseJava += "~serviceName:" + serviceName + "</br>";
+		var pricingTable = "<table> <tr> <th>Start Usage Amount</th> <th>Cost</th>";
+
+		var slab;
+		var cost;
+		var pricingTable1 = "";
+
+		//alert('0->'+finalResponse);
+		for (i = 0; i < output.length; i++) {
+			//alert('output[i]->'+output[i]);
+			firstIndex1 = output[i].indexOf("~");
+			lastIndex1 = output[i].length;
+			slab = output[i].substring(0, firstIndex1);
+			cost = output[i].substring(firstIndex1 + 1, lastIndex1);
+			pricingTable += "<tr><td>" + slab + "</td>" + "<td>" + cost
+					+ "</td></tr>";
+			pricingTable1 += output[i];
+			//finalResponse += output[i];
+		}
+
+		pricingTable += "</table>";
+		finalResponse += pricingTable;
+		//finalResponse += pricingTable1;
+		//finalResponse += sku;
+
+		for (i = 0; i < outputArrJava.length; i++) {
+			//alert('output[i]->'+output[i]);
+			finalResponseJava += outputArrJava[i];
+		}
+
+		//alert('1->'+finalResponse);
+
+		var pricingInfoForm = "<br><b> Add Units to Estimate </b> <br>"
+				+ "<form action=\"/estimate\" id=\"usrform1\" method=\"POST\">"
+				+ "<input type=\"text\" id=\"units\" size=\"10\">"
+				+ "<input type=\"text\" style=\"display: none\" id=\"sku\" name=\"sku\" value=\""+ finalResponseJava +"\"\">"
+				+
+				//	"<input type=\"text\" style=\"display: none\" id=\"sku\" name=\"sku\" value="" \">"+
+
+				"<input type=\"button\" value=\"Add\" onclick=\"madeAjaxCall();\" >"
+				+ "</form>";
+
+		finalResponse += pricingInfoForm;
+
+		//finalResponse += "<br><br><br><br><br><br><br><br><br><br><br><br><b>"+sku;
+
+		document.getElementById("pricingInfoId").innerHTML = finalResponse;
+		//document.getElementById("serviceDetailsId").innerHTML = res55;
+	}
+
+	$(document).ready(function() {
+		$('#w-input-search').autocomplete({
+			serviceUrl : '/getSuggestions',
+			paramName : "searchTerm",
+			delimiter : ",",
+			onSelect : function(suggestion) {
+				cityID = suggestion.data;
+				serviceId = cityID;
+				jQuery("#serviceId").val(cityID);
+				return false;
+			},
+			transformResult : function(response) {
+				return {
+					suggestions : $.map($.parseJSON(response), function(item) {
+						//document.getElementById('serviceId').value = item.serviceId;
+						return {
+							value : item.displayName,
+							data : item.serviceId,
+						};
+					})
+				};
+			}
+		});
+
+	});
+
+	function setValue(source) {
+		//document.getElementById("helloid").style.display = ""; 
+		document.getElementById("loaderid").className = "loader";
+		var serviceName = document.getElementById('w-input-search').value;
+		// alert (serviceName);
+		// document.getElementById("serviceInfoId").innerHTML = serviceName;
+
+		//alert(source);
+		//var e = document.getElementById("skuDD");
+		//var value1 = e.options[e.selectedIndex].value;
+		//var text = e.options[e.selectedIndex].text;
+		//document.getElementById("pricingInfoId").innerHTML = finalResponse;
+		//var hello = document.getElementById("w-input-search").name;
+		//alert(hello);
+		//displayName
+		//		    			document.getElementById("serviceDetailsId").innerHTML = item.displayName;
+
+	}
+</script>
+
+
+</head>
+
+<body>
+<div id="menu">
+<!--          <a href="/compare" target="_blank">Compare</a>
+         <a href="/enableAudio" target="_blank">Enable Audio</a>
+         <a href="/estimate" target="_blank">Estimate</a>
+		 <a href="/admin" target="_blank">Admin</a>
+ -->         
+ 		 <a href="/compare" >Compare</a>
+         <a href="/enableAudio" >Enable Audio</a>
+         <a href="/estimate" >Estimate</a>
+		 <a href="/admin" >Admin</a>
+
+</div>
+
+<h2><img src="GCLcalclogo.png" alt="Spring2Boot" ></h2>
+<div>	<a href="/get-services#listOfAllServices" target="_blank"><b>List of all GCP Services</b></a></div>
+
+
+	<!-- <h2>GCP Calculator</h2> -->
+
+	<div id="col-1">
+		<form action="/search-service" id="usrform" method="POST">
+			<input type="text" id="w-input-search" value="" size="65" name="displayName" placeholder="Search a service"> 
+			<input type="hidden" id="sNo" name="sNo" value="" > 
+			<input type="hidden" id="serviceId" name="serviceId" value=""> 
+			<input type="submit" value="Get Options" onClick="setValue(this)">
+		</form>
+	</div>
+
+	<div id="col-2">
+
+		<tr th:if="${currentServiceName != null}">
+			<b> Service </b><br>
+			<td th:text="${currentServiceName}"></td>
+			<br><br>
+		</tr>
+		
+		
+		<form action="/filter-service" id="filterService" method="POST">
+			<table>
+				<tr th:if="${filterRegionMap != null}">
+					<td colspan="2"><b>Region</b> 
+					<select id="regionDD" name="regionDD" style="width: 400px" onChange="setValue3(this)">
+<!-- 							<option value="${region}">---------------------------------Select----------------------------------</option>
+ -->
+							<option th:each="region: ${filterRegionMap.entrySet()}"
+								th:value="${region.getKey()}" th:text="${region.getKey()}"
+								th:selected="${region.getValue()}" />
+					</select></td>
+				</tr>
+
+				<tr th:if="${filterResourceFamilyMap != null}">
+					<td colspan="2"><b>Filters</b> 
+					<th:block th:each="filter : ${filterResourceFamilyMap.entrySet()}">
+							<input type="checkbox" name="filters" th:value="${filter.getKey()}" th:checked="${filter.getValue()}"/>
+							<label th:text="${filter.getKey()}"></label>
+					</th:block></td>
+				</tr>
+
+				<tr th:if="${filterResourceGroup != null}">
+					<td colspan="2"><b>Filters2</b> 
+					<th:block th:each="filter : ${filterResourceGroup}">
+							<input type="checkbox" name="filters" th:value="${filter}" />
+							<label th:text="${filter}"></label>
+					</th:block></td>
+				</tr>
+
+				<tr th:if="${filterResourceFamilyMap != null or filterRegionMap != null}">
+<!-- 					<td><input type="button" value="Apply filters" onclick="madeAjaxCall1();"></td>
+ -->					
+									<td><input type="submit" value="Apply filters" onClick="setValue55(this)"></td>
+				
+				</tr>
+			</table>
+			
+			<input type="hidden" id="regionId" name="regionId" value="">
+		</form>
+
+		<tr
+			th:if="${filterResourceFamilyMap != null or filterRegionMap != null}">
+			<br>
+		</tr>
+
+		<tr th:if="${skuList != null and !skuList.empty}">
+			<td colspan="2"><b>Pricing Options</b></td>
+			<td><br> <select th:field="*{skuList}" id="skuDD"
+				name="skuDD" onChange="printPricingCurrentSku(this)" style="width: 465px">
+					<option value="" selected="selected">----------------------------------------Select-----------------------------------------</option>
+					<option th:each="sku: ${skuList}" th:value="${sku}" th:text="${sku.description}" />
+			</select></td>
+		</tr>
+		<span id="pricingInfoId"></span>
+		
+		<span class="display: none" id="result"> </span>
+		
+
+	</div>
+
+	<span id="loaderid"></span>
+
+</body>
+</html>
